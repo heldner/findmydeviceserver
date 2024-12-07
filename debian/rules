@@ -1,7 +1,6 @@
 #!/usr/bin/make -f
 
 export DEB_BUILD_OPTIONS=noautodbgsym
-export GO111MODULE=off
 
 GOPATH := $(PWD)/gocode
 export GOPATH
@@ -22,7 +21,7 @@ findmydeviceserver-v$(VERSION).tar.gz:
 	tar xzf findmydeviceserver-v$(VERSION).tar.gz
 
 override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz
-	mkdir $(GOPATH)
+	[ -d $(GOPATH) ] || mkdir $(GOPATH)
 	cd findmydeviceserver-v$(VERSION) && go mod download && go mod verify
 	cd findmydeviceserver-v$(VERSION) && go build -o fmd main.go
 
