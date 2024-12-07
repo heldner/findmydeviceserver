@@ -18,7 +18,7 @@ override_dh_auto_clean:
     findmydeviceserver
 
 findmydeviceserver-v$(VERSION).tar.gz:
-	curl -L -O https://gitlab.com/Nulide/findmydeviceserver/-/archive/v$(VERSION)/findmydeviceserver-v$(VERSION).tar.gz
+	curl -s -L -O https://gitlab.com/Nulide/findmydeviceserver/-/archive/v$(VERSION)/findmydeviceserver-v$(VERSION).tar.gz
 	tar xzf findmydeviceserver-v$(VERSION).tar.gz
 
 override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz

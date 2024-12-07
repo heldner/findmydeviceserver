@@ -28,15 +28,15 @@ jobs:
           chmod +x /usr/local/go/bin/go
           fakeroot debian/rules binary
 
-    - name: Create Draft Release
+    - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: 0.8.0
         release_name: findmydeviceserver.deb
-        draft: true
+        draft: false
         prerelease: false
 
     - uses: actions/upload-release-asset@v1.0.1
