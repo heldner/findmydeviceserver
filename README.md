@@ -5,3 +5,4 @@ Build deb package for golang service [findmydeviceserver](https://gitlab.com/Nul
 ```shell
 fakeroot debian/rules binary
 ```
+
