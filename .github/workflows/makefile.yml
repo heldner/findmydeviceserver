@@ -44,7 +44,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./findmydeviceserver_*_amd64.deb
+        asset_path: ../findmydeviceserver_*_amd64.deb
         asset_name: findmydeviceserver.deb
         asset_content_type: application/zip
 
