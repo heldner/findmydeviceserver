@@ -22,7 +22,7 @@ jobs:
         options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
         run: |
           apt update
-          apt install --no-install-recommends -y fakeroot build-essential debhelper golang
+          apt install --no-install-recommends -y curl fakeroot build-essential debhelper golang
           fakeroot debian/rules binary
 
     - name: Create Draft Release
