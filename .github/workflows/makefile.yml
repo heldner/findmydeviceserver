@@ -1,0 +1,52 @@
+---
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run the build process with Docker
+      uses: addnab/docker-run-action@v3
+      with:
+        image: debian:bullseye-slim
+        options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
+        run: |
+          apt update
+          apt install -y build-essential
+          fakeroot debian/rules binary
+
+    - name: Create Draft Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+      with:
+        tag_name: 0.8.0
+        release_name: findmydeviceserver.deb
+        draft: true
+        prerelease: false
+
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./findmydeviceserver_*_amd64.deb
+        asset_name: findmydeviceserver.deb
+        asset_content_type: application/zip
+
+    - uses: eregon/publish-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}
