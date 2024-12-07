@@ -1,0 +1,18 @@
+Source: findmydeviceserver
+Section: web
+Priority: optional
+Maintainer: Stanislav Korlev <stan.korolev@mail.ru>
+Build-Depends: debhelper-compat (= 13),
+               golang (>= 1.22)
+Standards-Version: 4.6.2
+Homepage: https://gitlab.com/Nulide/findmydeviceserver/
+Rules-Requires-Root: no
+
+Package: findmydeviceserver
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Provides: findmydeviceserver
+Description: The FMD app can register an account on FMD Server. The app can
+  then upload its location at regular intervals. You can also push commands to
+  the FMD app on your device from FMD Server, e.g. to make your device ring.

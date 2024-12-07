@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_OPTIONS=noautodbgsym
+
+SHELL := sh -e
+VERSION := 0.8.0
+
+%:
+	dh ${@}
+
+override_dh_auto_clean:
+	rm -rf debhelper-build-stamp \
+    files findmydeviceserver.substvars \
+    findmydeviceserver
+
+findmydeviceserver-v$(VERSION).tar.gz:
+	curl -L -s -O https://gitlab.com/Nulide/findmydeviceserver/-/archive/v$(VERSION)/findmydeviceserver-v$(VERSION).tar.gz
+	tar xzf findmydeviceserver-v$(VERSION).tar.gz
+
+override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz
+	cd findmydeviceserver-v$(VERSION) && go mod download && go mod verify
+	cd findmydeviceserver-v$(VERSION) && go build -o fmd main.go
+
+override_dh_auto_install:
+	mkdir -p debian/findmydeviceserver/usr/bin
+	mkdir -p debian/findmydeviceserver/usr/etc/findmydeviceserver
+	cp findmydeviceserver-v$(VERSION)/fmd debian/findmydeviceserver/usr/bin
+	cp findmydeviceserver-v$(VERSION)/config.example.yml debian/findmydeviceserver/usr/etc/findmydeviceserver/config.yml
+
+override_dh_dwz:
+	true

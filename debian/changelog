@@ -1,0 +1,7 @@
+findmydeviceserver (0.8.0-1) stable; urgency=low
+
+  * New upstream release.
+  * debian:
+    - first release
+
+ -- Stanislav Korlev <stan.korolev@mail.ru>  Fri, 07 Dec 2024 20:08:57 +0300
