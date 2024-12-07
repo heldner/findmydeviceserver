@@ -7,6 +7,7 @@ export GOPATH
 
 SHELL := sh -e
 VERSION := 0.8.0
+GOBIN := /usr/local/go/bin/go
 
 %:
 	dh ${@}
@@ -22,8 +23,8 @@ findmydeviceserver-v$(VERSION).tar.gz:
 
 override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz
 	[ -d $(GOPATH) ] || mkdir $(GOPATH)
-	cd findmydeviceserver-v$(VERSION) && go mod download && go mod verify
-	cd findmydeviceserver-v$(VERSION) && go build -o fmd main.go
+	cd findmydeviceserver-v$(VERSION) && $(GOBIN) mod download && $(GOBIN) mod verify
+	cd findmydeviceserver-v$(VERSION) && $(GOBIN) build -o fmd main.go
 
 override_dh_auto_install:
 	mkdir -p debian/findmydeviceserver/usr/bin
