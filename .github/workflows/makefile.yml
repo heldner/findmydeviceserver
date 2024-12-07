@@ -24,7 +24,7 @@ jobs:
           apt update
           apt install --no-install-recommends -y ca-certificates curl fakeroot build-essential debhelper
           curl -s -L -O https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
-          tar -C /usr/local -xzf go1.23.4.linux-amd64.tar.gz
+          tar -C /usr -xzf go1.23.4.linux-amd64.tar.gz
           fakeroot debian/rules binary
 
     - name: Create Draft Release
