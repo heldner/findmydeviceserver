@@ -22,10 +22,7 @@ jobs:
         options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
         run: |
           apt update
-          apt install --no-install-recommends -y ca-certificates curl fakeroot build-essential debhelper
-          curl -s -L -O https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
-          tar -C /usr/local -xzf go1.23.4.linux-amd64.tar.gz
-          chmod +x /usr/local/go/bin/go
+          apt install --no-install-recommends -y golang ca-certificates curl fakeroot build-essential debhelper
           fakeroot debian/rules binary
 
     - name: Create Release
@@ -41,7 +38,7 @@ jobs:
 
     - uses: actions/upload-release-asset@v1.0.1
       env:
-        GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ../findmydeviceserver_*_amd64.deb
@@ -50,6 +47,6 @@ jobs:
 
     - uses: eregon/publish-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_id: ${{ steps.create_release.outputs.id }}
