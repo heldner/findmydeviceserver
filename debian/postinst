@@ -3,12 +3,12 @@ set -e
 
 FMDUSER=fmd
 
-if [ "$1" = 'configure' ] && [ -z "$DPKG_ROOT" ] && ! getent passwd $FMDUSER >/dev/null; then
+if [ "$1" = 'configure' ] && [ -z "$DPKG_ROOT" ] && ! getent passwd "$FMDUSER" >/dev/null; then
     # add unprivileged user for the findmydeviceserver
     adduser --force-badname --system --home /nonexistent  \
-        --no-create-home --quiet $FMDUSER || true
+        --no-create-home --quiet "$FMDUSER" || true
 fi
 
-if [ $(stat -c %U /var/cache/fmd-db) != "$FMDUSER" ]; then
-    chown -R /var/cache/fmd-db
+if [ "$(stat -c %U /var/cache/fmd-db)" != "$FMDUSER" ]; then
+    chown -R "$FMDUSER" /var/cache/fmd-db
 fi
