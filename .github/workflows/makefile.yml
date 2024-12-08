@@ -23,6 +23,8 @@ jobs:
           apt update
           apt install --no-install-recommends -y golang ca-certificates curl fakeroot build-essential debhelper
           fakeroot debian/rules binary
+          ls .
+          ls ..
 
     - name: Release
       uses: softprops/action-gh-release@v2
