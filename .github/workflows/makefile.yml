@@ -22,10 +22,11 @@ jobs:
         run: |
           apt update
           apt install --no-install-recommends -y golang ca-certificates curl fakeroot build-essential debhelper
-          fakeroot debian/rules binary
+          VERSION=${{ github.ref_name }} fakeroot debian/rules binary
           mv ../findmydeviceserver_${{ github.ref_name }}-1_amd64.deb .
 
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
         files: findmydeviceserver_${{ github.ref_name }}-1_amd64.deb
+        body_path: ${{ github.workspace }}/debian/changelog

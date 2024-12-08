@@ -1,0 +1,16 @@
+[Unit]
+Description=Findmydevice service
+Documentation=https://gitlab.com/Nulide/findmydeviceserver
+After=network.target
+
+[Service]
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+DynamicUser=true
+ExecStart=/usr/bin/fmd serve --config /etc/findmydeviceserver/config.yml --web-dir /usr/lib/fmd-web --db-dir /var/cache/fmd-db
+KillMode=process
+Restart=always
+RestartPreventExitStatus=255
+
+[Install]
+WantedBy=multi-user.target
+Alias=findmydeviceserver.service
