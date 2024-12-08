@@ -3,9 +3,8 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - "*.*.*"
 
 jobs:
   build:
@@ -13,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Run build process with Docker
+    - name: Build with docker
       uses: addnab/docker-run-action@v3
       with:
         image: debian:bookworm-slim
@@ -25,28 +24,7 @@ jobs:
           apt install --no-install-recommends -y golang ca-certificates curl fakeroot build-essential debhelper
           fakeroot debian/rules binary
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Release
+      uses: softprops/action-gh-release@v2
       with:
-        tag_name: 0.8.0
-        release_name: findmydeviceserver.deb
-        draft: false
-        prerelease: false
-
-    - uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ../findmydeviceserver_*_amd64.deb
-        asset_name: findmydeviceserver.deb
-        asset_content_type: application/zip
-
-    - uses: eregon/publish-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        release_id: ${{ steps.create_release.outputs.id }}
+        files: ../findmydeviceserver_${{ github.ref }}_amd64.deb
