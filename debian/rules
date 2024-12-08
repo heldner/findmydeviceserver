@@ -27,9 +27,9 @@ override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz
 
 override_dh_auto_install:
 	mkdir -p debian/findmydeviceserver/usr/bin
-	mkdir -p debian/findmydeviceserver/usr/etc/findmydeviceserver
+	mkdir -p debian/findmydeviceserver/etc/findmydeviceserver
 	cp findmydeviceserver-v$(VERSION)/fmd debian/findmydeviceserver/usr/bin
-	cp findmydeviceserver-v$(VERSION)/config.example.yml debian/findmydeviceserver/usr/etc/findmydeviceserver/config.yml
+	cp findmydeviceserver-v$(VERSION)/config.example.yml debian/findmydeviceserver/etc/findmydeviceserver/config.yml
 
 override_dh_dwz:
 	true
