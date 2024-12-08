@@ -28,13 +28,13 @@ override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz
 override_dh_auto_install:
 	mkdir -p debian/findmydeviceserver/usr/bin
 	mkdir -p debian/findmydeviceserver/usr/lib
-	mkdir -p debian/findmydeviceserver/lib/systemd
+	mkdir -p debian/findmydeviceserver/lib/systemd/system
 	mkdir -p debian/findmydeviceserver/var/cache/fmd-db
 	mkdir -p debian/findmydeviceserver/etc/findmydeviceserver
 	cp -R findmydeviceserver-v$(VERSION)/web debian/findmydeviceserver/usr/lib/fmd-web
 	cp findmydeviceserver-v$(VERSION)/fmd debian/findmydeviceserver/usr/bin
 	cp findmydeviceserver-v$(VERSION)/config.example.yml debian/findmydeviceserver/etc/findmydeviceserver/config.yml
-	cp debian/fmd.service debian/findmydeviceserver/lib/systemd
+	cp debian/fmd.service debian/findmydeviceserver/lib/systemd/system
 
 override_dh_dwz:
 	true
