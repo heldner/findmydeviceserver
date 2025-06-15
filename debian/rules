@@ -22,7 +22,7 @@ findmydeviceserver-v$(VERSION).tar.gz:
 
 override_dh_auto_build: findmydeviceserver-v$(VERSION).tar.gz
 	[ -d $(GOPATH) ] || mkdir $(GOPATH)
-	mv findmydeviceserver-v$(VERSION)* findmydeviceserver-v$(VERSION)
+	mv fmd-server-v0.11.0* findmydeviceserver-v$(VERSION)
 	cd findmydeviceserver-v$(VERSION) && go mod download && go mod verify
 	cd findmydeviceserver-v$(VERSION) && go build -o fmd main.go
 
