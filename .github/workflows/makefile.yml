@@ -21,7 +21,7 @@ jobs:
         options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
         run: |
           apt update
-          apt install --no-install-recommends -y golang ca-certificates curl fakeroot build-essential debhelper
+          apt install --no-install-recommends -y -t bookworm-backports golang ca-certificates curl fakeroot build-essential debhelper
           VERSION=${{ github.ref_name }} fakeroot debian/rules binary
           mv ../findmydeviceserver_${{ github.ref_name }}-1_amd64.deb .
 
